@@ -3,7 +3,7 @@ namespace Simple_Calculator
     public partial class Form1 : Form
     {
         double value1, value2, result = 0;
-        String sign;
+        String sign="";
         public Form1()
         {
             InitializeComponent();
@@ -63,6 +63,9 @@ namespace Simple_Calculator
             textBox.Text = "";
             label1.Text = "";
             label2.Text = "";
+            value1=0;
+            value2 = 0;
+            sign = "";
         }
         private void Clear_Click(object sender, EventArgs e)
         {
@@ -115,7 +118,32 @@ namespace Simple_Calculator
 
         private void Percent_Click(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(textBox.Text))
+            {
+                if (!string.IsNullOrEmpty(sign)) 
+                {
+                    if (sign == "*" || sign == "/")
+                    {
+                        value2 = Convert.ToDouble(textBox.Text);
+                        value2 = value2 / 100;
+                        textBox.Text = value2.ToString();
+                        label2.Text = textBox.Text;
+                    }
+                    else if (sign == "+" || sign == "-")
+                    {
+                        value2 = Convert.ToDouble(textBox.Text);
+                        value2 = (value1*value2 )/ 100;
+                        textBox.Text = value2.ToString();
+                        label2.Text = textBox.Text;
+                    }
+                }
+                else // If no operator exists
+                {
+                    value1 = Convert.ToDouble(textBox.Text) / 100;
+                    textBox.Text = value1.ToString();
+                    label1.Text = textBox.Text;
+                }
+            }
         }
 
         private void Equal_Click(object sender, EventArgs e)
@@ -142,13 +170,6 @@ namespace Simple_Calculator
                 result = value1 * value2;
                 textBox.Text = Convert.ToString(result);
             }
-            else if (sign == "%")
-            {
-                result = value1 * value2;
-                textBox.Text = Convert.ToString(result);
-            }
-
-
         }
     }
 }
